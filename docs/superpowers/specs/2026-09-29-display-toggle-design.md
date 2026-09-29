@@ -23,14 +23,23 @@ lit) and DDC power-off (the panel sleeps but macOS still treats it as connected)
 
 ## Components
 
+SwiftPM package, library `DisplayCore` + executable `DisplayToggle`.
+
 | File | Responsibility |
 |---|---|
-| `Sources/Displays.swift` | Core: enumerate displays, disconnect/reconnect, safety check, remembered-state file. No UI. |
-| `Sources/CLI.swift` | Argument parsing and table output for `displayctl`. |
-| `Sources/MenuBar.swift` | `NSStatusItem` menu, rebuilt every time it opens. |
-| `Sources/main.swift` | Arguments present → CLI; otherwise → menu bar app. |
-| `build.sh` | `swiftc` → `build/DisplayToggle.app` (Info.plist with `LSUIElement`), ad-hoc codesign. |
-| `install.sh` | Copy app to `~/Applications`, symlink `displayctl` onto `PATH`. |
+| `Sources/DisplayCore/DisplayInfo.swift` | `DisplayInfo` model, `SafetyVerdict`, `DisplayError`. |
+| `Sources/DisplayCore/DisplayLogic.swift` | Pure logic: safety rule, ID/name lookup, prune/merge of remembered state. |
+| `Sources/DisplayCore/StateStore.swift` | JSON file of displays this tool turned off. |
+| `Sources/DisplayCore/DisplayManager.swift` | Side effects: CoreGraphics enumeration, IOKit physical-panel detection, SkyLight toggle. |
+| `Sources/DisplayToggle/CLI.swift` | Argument parsing and table output for `displayctl`. |
+| `Sources/DisplayToggle/MenuBar.swift` | `NSStatusItem` menu, rebuilt every time it opens. |
+| `Sources/DisplayToggle/main.swift` | Invoked as `displayctl` or with arguments → CLI; otherwise → menu bar app. |
+| `build.sh` | `swift build -c release` → `build/DisplayToggle.app` (`LSUIElement`), ad-hoc codesign. |
+| `install.sh` | Copy app to `~/Applications`, symlink `~/.local/bin/displayctl`, launch. |
+
+"Physical" means built-in, or its vendor/model/serial matches an
+`IOMobileFramebufferShim` entry's `DisplayAttributes.ProductAttributes` in the
+IORegistry. Virtual displays (e.g. the RustDesk/BetterDisplay "Remote" screen) have none.
 
 ## Data flow
 
@@ -76,8 +85,8 @@ Exits non-zero with a message on any failure.
 
 ## Testing
 
-- The pure logic (safety rule, name/ID resolution, state pruning) runs through
-  `displayctl selftest`, with no hardware side effects.
+- `swift test` (Swift Testing) covers the pure logic (safety rule, name/ID resolution,
+  state pruning/merge) and the state file, with no hardware side effects.
 - `displayctl list` against the real hardware (read-only).
 - Live off → on round-trip on one physical monitor, run **only with your go-ahead**,
   because it blanks that monitor and moves its windows.
