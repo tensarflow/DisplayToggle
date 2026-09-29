@@ -9,6 +9,7 @@ BIN_DIR="${BIN_DIR:-$HOME/.local/bin}"
 mkdir -p "$APPS" "$BIN_DIR"
 
 pkill -x DisplayToggle 2>/dev/null || true
+while pgrep -x DisplayToggle >/dev/null; do sleep 0.2; done
 rm -rf "$APPS/DisplayToggle.app"
 cp -R build/DisplayToggle.app "$APPS/"
 ln -sf "$APPS/DisplayToggle.app/Contents/MacOS/DisplayToggle" "$BIN_DIR/displayctl"

@@ -88,7 +88,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         let alert = NSAlert()
         alert.messageText = "Turn off \(display.name)?"
         alert.informativeText = "Only virtual displays will remain. If your remote session ends, the Mac will "
-            + "have no screen until you connect remotely again or run `displayctl on --all` over SSH."
+            + "have no screen until you connect remotely again or restart it. A restart brings every monitor back."
         alert.addButton(withTitle: "Turn Off")
         alert.addButton(withTitle: "Cancel")
         NSApp.activate()

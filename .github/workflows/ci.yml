@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build app bundle
+        run: ./build.sh
+      - name: Run tests
+        run: swift test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DisplayToggle
+          path: build/DisplayToggle.zip

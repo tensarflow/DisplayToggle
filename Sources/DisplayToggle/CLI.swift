@@ -27,8 +27,8 @@ enum CLI {
                 let all = manager.allDisplays()
                 let display = try DisplayLogic.find(arguments[1], in: all)
                 if display.isOn, DisplayLogic.safety(turningOff: display.id, among: all) == .onlyVirtualRemains {
-                    warn("only virtual displays will remain. If the remote session ends, the Mac has no screen "
-                         + "until you connect remotely again or run `displayctl on --all` over SSH.")
+                    warn("only virtual displays will remain. If the remote session ends, the Mac has no screen until "
+                         + "you connect remotely again or restart it (a restart brings every monitor back).")
                 }
                 try manager.turnOff(display)
                 print("\(display.name) is off.")
