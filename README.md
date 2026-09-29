@@ -40,14 +40,12 @@ bar app **plus a `displayctl` command** you can script.
 
 ## Features
 
-| | |
-|---|---|
-| 🖥 **Really disconnected** | Gone from System Settings › Displays and the display arrangement, not just black or mirrored. |
-| 🖱 **One click** | A menu bar icon with a checkmark per monitor. |
-| ⌨️ **Scriptable** | `displayctl list`, `off`, `on`, `on --all`, by ID or by name. |
-| 🛟 **Safe by default** | Refuses to switch off your last screen, warns when only a virtual (remote-desktop) screen would be left, and a restart, logout or replug brings everything back. |
-| 🪶 **Tiny** | One 220 KB binary. No dependencies, no background daemon, no network access, no telemetry. |
-| 🔓 **Open source** | MIT licensed, about 450 lines of Swift you can read over a coffee. |
+- 🖥 **Really disconnected**. Gone from System Settings › Displays and the display arrangement, not just black or mirrored.
+- 🖱 **One click**. A menu bar icon with a checkmark per monitor.
+- ⌨️ **Scriptable**: `displayctl list`, `off`, `on`, `on --all`, by ID or by name.
+- 🛟 **Safe by default**. Refuses to switch off your last screen, warns when only a virtual (remote-desktop) screen would be left, and a restart, logout or replug brings everything back.
+- 🪶 **Tiny**. One 220 KB binary. No dependencies, no background daemon, no network access, no telemetry.
+- 🔓 **Open source** — MIT licensed, about 450 lines of Swift you can read over a coffee.
 
 ## Install
 
